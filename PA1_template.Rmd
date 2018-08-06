@@ -1,16 +1,16 @@
 
 
----
-title: "Peer Assessment 1, Reproducible Research"
-output: html_document
----
+# Peer Assessment 1, Reproducible Research
+
+### output: html_document
+
 
 ```{r setup, message=F, warning=F }
  options(scipen = 1, digits = 2)
 
 ```
 
-# Loading and preprocessing the data 
+### Loading and preprocessing the data 
 
 Data download from the web is loaded into a dataframe using 
 fread from data.table package
@@ -23,6 +23,7 @@ library(scales)
 library(imputeMissings)
 library(lattice)
 library(Hmisc)
+library(markdown)
 # Source URL : 
 url = "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
 download.file(url,destfile="zipped_file.zip")
@@ -36,7 +37,7 @@ head(input)
 
 ```
 
-# What is mean total number of steps taken per day?
+### What is mean total number of steps taken per day?
 
 Missing values are ignored for this analysis.
 
@@ -67,7 +68,7 @@ Mean of the Total number of steps per day is : `r mean_steps` .
 
 Median of the Total number of steps per day is : `r median_steps` .
 
-# What is the average daily activity pattern?
+### What is the average daily activity pattern?
 
 Time series plot of the average number of steps taken
 ```{r}
@@ -104,7 +105,7 @@ ggplot(m,aes(x=interval,y=steps )) + geom_line() +geom_path(na.rm=TRUE) + geom_p
 Interval with maxmium steps : `r max_int` .
 
 
-# Imputing missing values 
+### Imputing missing values 
 
 Check if the input file has missing values and then replace the missing values with mean of that variable as part of imputation
 
@@ -159,7 +160,7 @@ Mean after imputation :  `r mean_steps_non_imputed  `
 Total steps before Imputation : `r sum_steps_non_imputed   `   
 Total steps after Imputation : `r sum_steps_imputed   `   
 
-# Are there differences in activity patterns between weekdays and weekends?
+### Are there differences in activity patterns between weekdays and weekends?
 
 Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends
 ```{r} 

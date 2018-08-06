@@ -1,16 +1,16 @@
 
 
----
-title: "Peer Assessment 1, Reproducible Research"
-output: html_document
----
+# Peer Assessment 1, Reproducible Research
+
+### output: html_document
+
 
 
 ```r
  options(scipen = 1, digits = 2)
 ```
 
-# Loading and preprocessing the data 
+### Loading and preprocessing the data 
 
 Data download from the web is loaded into a dataframe using 
 fread from data.table package
@@ -24,6 +24,7 @@ library(scales)
 library(imputeMissings)
 library(lattice)
 library(Hmisc)
+library(markdown)
 # Source URL : 
 url = "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
 download.file(url,destfile="zipped_file.zip")
@@ -46,7 +47,7 @@ head(input)
 ## 6:    NA 2012-10-01       25
 ```
 
-# What is mean total number of steps taken per day?
+### What is mean total number of steps taken per day?
 
 Missing values are ignored for this analysis.
 
@@ -70,7 +71,7 @@ Histogram of the total number of steps taken each day is plotted
 ggplot(input_agg,aes(x=steps )) + geom_histogram(binwidth=500, fill="brown")  + ylab("Frequency") + xlab("Total Number of Steps")  + ggtitle("Total Steps takes each day")
 ```
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png)
 
 Mean and Median of the total number of steps per day is calculated and reported 
 
@@ -83,7 +84,7 @@ Mean of the Total number of steps per day is : 10766 .
 
 Median of the Total number of steps per day is : 10765 .
 
-# What is the average daily activity pattern?
+### What is the average daily activity pattern?
 
 Time series plot of the average number of steps taken
 
@@ -97,7 +98,7 @@ input_avg <- input_avg %>%
 ggplot(input_avg,aes(x=date,y=steps )) + geom_line(color="green") +geom_path(na.rm=TRUE) + geom_point()+ ylab("Average Steps # ") + xlab("Date")  + scale_x_date(labels = date_format("%Y-%m-%d"), date_breaks = "1 days") + theme(axis.text.x=element_text(angle=90, hjust=1))+ ggtitle("Time series plot of average number of steps taken")
 ```
 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png)
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
 
 Time series plot of the 5-minute interval(x-axis) and the average number of steps taken,averaged across all days(y-axis)
 
@@ -136,12 +137,12 @@ ggplot(m,aes(x=interval,y=steps )) + geom_line() +geom_path(na.rm=TRUE) + geom_p
 ## Warning: Removed 287 rows containing missing values (geom_point).
 ```
 
-![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png)
 
 Interval with maxmium steps : 835 .
 
 
-# Imputing missing values 
+### Imputing missing values 
 
 Check if the input file has missing values and then replace the missing values with mean of that variable as part of imputation
 
@@ -173,7 +174,7 @@ input_fixed_agg <- input_fixed %>%
 ggplot(input_fixed_agg,aes(x=steps )) + geom_histogram(binwidth=500, fill="brown")  + ylab("Frequency") + xlab("Total Number of Steps (after imputation)")  + ggtitle("Total Steps takes each day after imputation ")
 ```
 
-![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png)
+![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
 
 ```r
 mean_steps_non_imputed <- round(mean(input_avg$steps,na.rm=TRUE))
@@ -199,7 +200,7 @@ Mean after imputation :  37
 Total steps before Imputation : 5.71 &times; 10<sup>5</sup>   
 Total steps after Imputation : 6.57 &times; 10<sup>5</sup>   
 
-# Are there differences in activity patterns between weekdays and weekends?
+### Are there differences in activity patterns between weekdays and weekends?
 
 Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends
 
@@ -222,5 +223,5 @@ input_fixed_1 <- input_fixed_1 %>%
 ggplot(input_fixed_1,aes(x=interval,y=steps,group=1 )) + geom_line()+  ylab("Average Steps # ") + xlab("5 minute Interval") +   facet_grid( Day_Type ~ .)   + ggtitle("Pattern comparison between weekdays and weekend ")
 ```
 
-![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
+![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png)
 
